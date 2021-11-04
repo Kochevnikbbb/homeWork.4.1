@@ -7,10 +7,10 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence = "";
-    public static int[] heroesHealth = {300, 240, 250, 300};
-    public static int[] heroesDamage = {20, 15, 25, 0,};
-    public static String[] heroesAttackType = {"Physical",
-            "Magical", "Kinetic", "Medic"};
+    public static int[] heroesHealth = {300, 240, 250, 300, 700};
+    public static int[] heroesDamage = {20, 15, 25, 0, 5};
+    public static String[] heroesAttackType = {"Рыцарь",
+            "Магнеса", "ПСИХ", "Медик", "Голем"};
     public static int round_number = 0;
     public static Random random = new Random();
 
@@ -35,6 +35,7 @@ public class Main {
         if (bossHealth > 0) { // на всякий случай
             bossHits();
         }
+        mazohistGolem();
         heroesHit();
         medikHill();
         printStatistics();
@@ -140,5 +141,24 @@ public class Main {
                     + " (" + heroesDamage[i] + ")");
         }
         System.out.println("____________________");
+    }
+
+    public static void mazohistGolem() {
+        int uronOtBosa = bossDamage / 5;
+        int jivHeroes = 0;
+
+        if (heroesHealth[4] > 0) {
+            for (int i = 0; i < heroesDamage.length; i++) {
+                if (i == 4) {
+                    continue;
+                } else if (heroesHealth[i] > 0) {
+                    jivHeroes++;
+                    heroesHealth[i] += uronOtBosa;
+                }
+            }
+            heroesHealth[4] -= uronOtBosa * jivHeroes;
+            System.out.println("урон голему " + uronOtBosa * jivHeroes + "+" + bossDamage);
+        }
+
     }
 }
