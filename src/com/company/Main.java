@@ -4,15 +4,16 @@ import java.util.Random;
 
 public class Main {
 
-    public static int bossHealth = 700;
-    public static int bossDamage = 50;
+    public static int uronTakeGolem = 0;
+    public static int bossHealth = 1000;
+    public static int bossDamage = 80;
     public static String bossDefence = "";
-    public static int[] heroesHealth = {300, 240, 250, 300, 700, 250};
-    public static int[] heroesDamage = {20, 15, 25, 0, 5, 20};
-    public static String[] heroesAttackType = {"Рыцарь",
-            "Магнеса", "ПСИХ", "Медик", "Голем", "Лаки Лучано"};
+    public static int[] heroesHealth = {300, 240, 250, 300, 700, 250, 280, 200};
+    public static int[] heroesDamage = {20, 15, 25, 0, 5, 20, 25, 10};
+    public static String[] heroesAttackType = {"Рыцарь", "Магнеса", "ПСИХ", "Медик", "Голем", "Лаки Лучано", "Берсерк", "Вор"};
     public static int round_number = 0;
     public static Random random = new Random();
+
 
     public static void main(String[] args) {
         printStatistics();
@@ -34,12 +35,15 @@ public class Main {
         if (bossHealth > 0) { // на всякий случай
             bossHits();
         }
-        /*naOstrieNoja();*/
+        naOstrieNoja();
         mazohistGolem();
-
+        berserkZver();
         heroesHit();
+        //vorVzakone();
         medikHill();
+        vyjivshieHeroes();
         printStatistics();
+
     }
 
     public static boolean isGameFinished() {
@@ -133,8 +137,7 @@ public class Main {
 
     public static void printStatistics() {
         System.out.println(round_number + " ROUND ______________");
-        System.out.println("Boss health: " + bossHealth
-                + " (" + bossDamage + ")");
+        System.out.println("\n" + "BOSS HEALTH: " + bossHealth + " (" + bossDamage + ")" + "\n");
         for (int i = 0; i < heroesHealth.length; i++) {
             System.out.println(heroesAttackType[i]
                     + " health: " + heroesHealth[i]
@@ -144,6 +147,7 @@ public class Main {
     }
 
     public static void mazohistGolem() {
+
         int uronOtBosa = bossDamage / 5;
         int jivHeroes = 0;
 
@@ -158,26 +162,60 @@ public class Main {
             }
             heroesHealth[4] -= uronOtBosa * jivHeroes;
             System.out.println("урон голему " + uronOtBosa * jivHeroes + "+" + bossDamage);
-
-            //Лаки Лучано
-            boolean ukloOtBossa = random.nextBoolean();
-            if (heroesHealth[5] > 0){
-                if (ukloOtBossa){
-                    heroesHealth[5] += uronOtBosa * jivHeroes;
-                    System.out.println("---лучано уклонейшен---");
-                }
-            }
+            uronTakeGolem = uronOtBosa * jivHeroes;
         }
 
     }
 
-   /* public static void naOstrieNoja(){
-        boolean ukloOtBossa = random.nextBoolean();
-        if (heroesHealth[5] > 0){
-            if (ukloOtBossa){
-                heroesHealth[5] += bossDamage;
-                System.out.println("---лучано уклонейшен---");
+    public static void naOstrieNoja() {
+        boolean uklonOtBossa = random.nextBoolean();
+        if (heroesHealth[5] > 0) {
+            if (uklonOtBossa) {
+                heroesHealth[5] += bossDamage - 10;
+
+                System.out.println("---Лучано уклонейшен--- ");
+
             }
         }
-    }*/
+    }
+
+    public static void vyjivshieHeroes() {
+        int kolvo = 0;
+/*
+        boolean zdoh = true;
+        for (int jivHero : heroesHealth){
+            if (jivHero > 0){
+                zdoh = false;
+            } else if (zdoh){
+                kolvo++;
+            }
+        }
+
+*/
+
+        for (int i = 0; i < heroesHealth.length; i++) {
+            if (heroesHealth[i] > 0) {
+                kolvo++;
+            }
+
+        }
+        System.out.println("!!! ОСТАЛОСЬ В ЖИВЫХ - " + kolvo + " героев !!!");
+
+    }
+
+    public static void berserkZver() {
+        int blocked = random.nextInt(bossDamage - 10) + 10;
+        if (heroesHealth[6] > 0) {
+            heroesHealth[6] += blocked;
+            bossHealth -= blocked;
+            System.out.println(heroesAttackType[6] + " заблокировал " + blocked + "xp и нанес урон Босу " + blocked + "xp");
+        }
+    }
+   /* public static void vorVzakone (){
+        int stun = random.nextInt(2);
+        if (heroesHealth[7] > 0 && stun == 1) {
+            System.out.println("Boss stunned until next round!");
+            break;
+        }*/
+
 }
