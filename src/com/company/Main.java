@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Main {
 
-    public static int uronTakeGolem = 0;
+    //public static int uronTakeGolem = 0;
     public static int bossHealth = 1000;
     public static int bossDamage = 80;
     public static String bossDefence = "";
@@ -39,7 +39,7 @@ public class Main {
         mazohistGolem();
         berserkZver();
         heroesHit();
-        //vorVzakone();
+        vorVzakone();
         medikHill();
         vyjivshieHeroes();
         printStatistics();
@@ -152,17 +152,17 @@ public class Main {
         int jivHeroes = 0;
 
         if (heroesHealth[4] > 0) {
-            for (int i = 0; i < heroesDamage.length; i++) {
+            for (int i = 0; i < heroesHealth.length; i++) {
                 if (i == 4) {
                     continue;
                 } else if (heroesHealth[i] > 0) {
                     jivHeroes++;
-                    heroesHealth[i] += uronOtBosa;
+                    //heroesHealth[i] += uronOtBosa;
                 }
             }
             heroesHealth[4] -= uronOtBosa * jivHeroes;
             System.out.println("урон голему " + uronOtBosa * jivHeroes + "+" + bossDamage);
-            uronTakeGolem = uronOtBosa * jivHeroes;
+            //uronTakeGolem = uronOtBosa * jivHeroes;
         }
 
     }
@@ -204,18 +204,38 @@ public class Main {
     }
 
     public static void berserkZver() {
-        int blocked = random.nextInt(bossDamage - 10) + 10;
+        int blocked = random.nextInt(80 - 10) + 10;
         if (heroesHealth[6] > 0) {
             heroesHealth[6] += blocked;
             bossHealth -= blocked;
             System.out.println(heroesAttackType[6] + " заблокировал " + blocked + "xp и нанес урон Босу " + blocked + "xp");
         }
     }
-   /* public static void vorVzakone (){
-        int stun = random.nextInt(2);
+    public static void vorVzakone () {
+        int zaglushka = random.nextInt(2);
+        if (heroesHealth[7] > 0) {
+            for (int i = 0; i < bossDamage; i++) {
+                if (zaglushka == 1) {
+                    System.out.println("вор зашлушил");
+                    bossDamage = 0;
+                    break;
+                } else if (zaglushka == 2) {
+                    System.out.println(" вор промазал ");
+                    break;
+                }
+            }
+        }
+
+
+        /*int stun = random.nextInt(2);
         if (heroesHealth[7] > 0 && stun == 1) {
-            System.out.println("Boss stunned until next round!");
-            break;
+            bossDamage = 0;
+            System.out.println("вор оглушил босса");
+        } if (heroesHealth[7] > 0 && stun == 2){
+            bossDamage = bossDamage + 10;
+            System.out.println("вор не справился");
         }*/
 
-}
+    }
+
+    }
