@@ -7,10 +7,10 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence = "";
-    public static int[] heroesHealth = {300, 240, 250, 300, 700};
-    public static int[] heroesDamage = {20, 15, 25, 0, 5};
+    public static int[] heroesHealth = {300, 240, 250, 300, 700, 250};
+    public static int[] heroesDamage = {20, 15, 25, 0, 5, 20};
     public static String[] heroesAttackType = {"Рыцарь",
-            "Магнеса", "ПСИХ", "Медик", "Голем"};
+            "Магнеса", "ПСИХ", "Медик", "Голем", "Лаки Лучано"};
     public static int round_number = 0;
     public static Random random = new Random();
 
@@ -23,8 +23,7 @@ public class Main {
 
     public static void chooseBossDefence() {
         Random random = new Random();
-        int randomIndex = random.nextInt(
-                heroesAttackType.length); // 0,1,2
+        int randomIndex = random.nextInt(heroesAttackType.length);
         bossDefence = heroesAttackType[randomIndex];
         System.out.println("Boss chose " + bossDefence);
     }
@@ -35,7 +34,9 @@ public class Main {
         if (bossHealth > 0) { // на всякий случай
             bossHits();
         }
+        /*naOstrieNoja();*/
         mazohistGolem();
+
         heroesHit();
         medikHill();
         printStatistics();
@@ -68,7 +69,6 @@ public class Main {
         for (int i = 0; i < heroesDamage.length; i++) {
             if (heroesHealth[i] > 0 && bossHealth > 0) {
                 if (heroesAttackType[i] == bossDefence) {
-                    Random random = new Random();
                     int coeff = random.nextInt(11); //0,1,2,3,4,5,6,7,8,9
                     if (bossHealth - heroesDamage[i] * coeff < 0) {
                         bossHealth = 0;
@@ -140,7 +140,7 @@ public class Main {
                     + " health: " + heroesHealth[i]
                     + " (" + heroesDamage[i] + ")");
         }
-        System.out.println("____________________");
+        System.out.println("____________________\n\n\n");
     }
 
     public static void mazohistGolem() {
@@ -158,7 +158,26 @@ public class Main {
             }
             heroesHealth[4] -= uronOtBosa * jivHeroes;
             System.out.println("урон голему " + uronOtBosa * jivHeroes + "+" + bossDamage);
+
+            //Лаки Лучано
+            boolean ukloOtBossa = random.nextBoolean();
+            if (heroesHealth[5] > 0){
+                if (ukloOtBossa){
+                    heroesHealth[5] += uronOtBosa * jivHeroes;
+                    System.out.println("---лучано уклонейшен---");
+                }
+            }
         }
 
     }
+
+   /* public static void naOstrieNoja(){
+        boolean ukloOtBossa = random.nextBoolean();
+        if (heroesHealth[5] > 0){
+            if (ukloOtBossa){
+                heroesHealth[5] += bossDamage;
+                System.out.println("---лучано уклонейшен---");
+            }
+        }
+    }*/
 }
